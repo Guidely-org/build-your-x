@@ -32,4 +32,5 @@ ingestion.*
 .DS_Store
 Thumbs.db
 
-# prod-seed.yaml
+# Claude
+.claude
