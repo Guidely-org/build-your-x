@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 
-app = FastAPI(title="ingestion_service")
+app = FastAPI(title="retrieval_service")
 
 
 @app.get("/")
 def read_root():
-    return {"service": "ingestion_service", "status": "ok"}
+    return {"service": "retrieval_service", "status": "ok"}
 
 
 @app.get("/health")
