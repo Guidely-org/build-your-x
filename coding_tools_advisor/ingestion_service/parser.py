@@ -58,9 +58,5 @@ def clean_html(html: str ) -> str:
     content = _decompose_unwanted_tags(soup)
     main_content = _pick_main_container(content)
     md_content = _convert_to_markdown(main_content)
-    print(md_content)
-
-
-html = fetch_html("https://builtin.com/articles/claude-code-codex-cursor-github-copilot-comparison")
-clean_html(html)
-
+    
+    return md_content
