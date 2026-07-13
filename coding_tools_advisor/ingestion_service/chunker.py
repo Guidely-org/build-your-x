@@ -73,20 +73,33 @@ from dataclasses import dataclass, field
 class Chunk:
     text: str
     heading_path: list[str] = field(default_factory=list)
+    source_url: str = ""
+    tool: str = ""
+    doc_type: str = ""
 
 
-def chunk_document(markdown_text: str, chunk_size: int = 1500) -> list[Chunk]:
+def chunk_document(
+    markdown_text: str,
+    source_url: str,
+    tool: str,
+    doc_type: str,
+    chunk_size: int = 1500,
+) -> list[Chunk]:
     sections = split_into_sections(markdown_text)
     chunks = []
 
     for section in sections:
         body = section["text"]
+        pieces = [body] if len(body) <= chunk_size else _pack_sentences(body, chunk_size=chunk_size)
 
-        if len(body) <= chunk_size:
-            chunks.append(Chunk(text=body, heading_path=section["heading_path"]))
-        else:
-            for piece in _pack_sentences(body, chunk_size=chunk_size):
-                chunks.append(Chunk(text=piece, heading_path=section["heading_path"]))
+        for piece in pieces:
+            chunks.append(Chunk(
+                text=piece,
+                heading_path=section["heading_path"],
+                source_url=source_url,
+                tool=tool,
+                doc_type=doc_type,
+            ))
 
     return chunks
 
