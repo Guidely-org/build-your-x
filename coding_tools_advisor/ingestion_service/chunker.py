@@ -90,6 +90,13 @@ def chunk_document(markdown_text: str, chunk_size: int = 1500) -> list[Chunk]:
 
     return chunks
 
+# A makeshift contextual augmentation
+def with_heading_context(chunk: Chunk) -> str:
+    if not chunk.heading_path:
+        return chunk.text
+    breadcrumb = " > ".join(chunk.heading_path)
+    return f"{breadcrumb}\n{chunk.text}"
+
 
 html = fetch_html("https://builtin.com/articles/claude-code-codex-cursor-github-copilot-comparison")
 md_txt = clean_html(html)
