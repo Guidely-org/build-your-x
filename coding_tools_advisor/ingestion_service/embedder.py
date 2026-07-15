@@ -10,33 +10,24 @@ openai_embedding_model = os.getenv('OPENAI_EMBEDDING_MODEL')
 client = OpenAI()
 
 
-def embed(chunk: str) -> list[float]:
-    response = client.embeddings.create(
-        model=openai_embedding_model,
-        input=chunk,
-        encoding_format="float"
-    )
-    
-    try:
-        embedding = response.data[0].embedding
-    except (KeyError, IndexError, TypeError) as exc:
-        raise ValueError("Response does not contain a valid embedding") from exc
+def embed(texts: list[str], batch_size: int = 100) -> list[list[float]]:
+    embeddings = []
 
-    return embedding
+    for i in range(0, len(texts), batch_size):
+        batch = texts[i:i + batch_size]
 
+        response = client.embeddings.create(
+            model=openai_embedding_model,
+            input=batch,
+            encoding_format="float",
+        )
 
+        try:
+            batch_embeddings = [item.embedding for item in response.data]
+        except (KeyError, IndexError, TypeError) as exc:
+            raise ValueError("Response does not contain valid embeddings") from exc
 
-# Testing area
-from parser import fetch_html, clean_html
-from chunker import Document
+        embeddings.extend(batch_embeddings)
 
-url = 'https://builtin.com/articles/claude-code-codex-cursor-github-copilot-comparison'
-html = fetch_html(url)
-md_text = clean_html(html)
-
-doc = Document(markdown_text=md_text, source_url=url, tool='all', doc_type='')
-chunks = doc.chunk_document()
-
-embeddings = embed(chunks[10].text_to_embed)
-print(embeddings)
+    return embeddings
 

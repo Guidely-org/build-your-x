@@ -21,6 +21,7 @@ class Chunk:
         self.id = self._make_chunk_id()
         self.metadata = self._build_chunk_metadata()
         self.text_to_embed = self._text_with_context()
+        self.embeddings = []
     
     def _make_chunk_id(self) -> str:
         raw = f"{self.source_url}::{self.text}"
@@ -41,6 +42,17 @@ class Chunk:
             "tool": self.tool,
             "doc_type": self.doc_type
         }
+
+def extract_strings_to_embed(chunks: list[Chunk]) -> list[str]:
+    return [c.text_to_embed for c in chunks ]
+
+def add_embeddings_to_chunks(
+    chunks: list[Chunk], embeddings: list[list[float]]
+) -> list[Chunk]:
+    for chunk, embedding in zip(chunks, embeddings):
+        chunk.embeddings = embedding
+    
+    return chunks
 
 
 class Document:
