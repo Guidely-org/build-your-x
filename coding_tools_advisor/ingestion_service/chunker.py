@@ -1,7 +1,5 @@
 import re
 import hashlib
-from dataclasses import dataclass, field
-
 
 _HEADING_RE = re.compile(r'^(#{1,6})\s+(.*)')
 
