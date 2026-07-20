@@ -1,8 +1,8 @@
 import os
-import itertools
 from dotenv import load_dotenv
 from pinecone import Pinecone
 from chunker import Chunk
+from utils import batched
 
 
 load_dotenv()
@@ -13,12 +13,6 @@ PC_NAMESPACE = os.getenv('PINECONE_NAMESPACE')
 
 pc = Pinecone(api_key=PC_API_KEY)
 index = pc.Index(PC_INDEX)
-
-def _batched(iterable, batch_size: int = 100):
-    """Yield successive batch_size-sized chunks from an iterable."""
-    it = iter(iterable)
-    while batch := list(itertools.islice(it, batch_size)):
-        yield batch
 
 def build_records(chunks: list[Chunk], embeddings: list[list[float]]) -> list[dict]:
     if len(chunks) != len(embeddings):
@@ -45,7 +39,7 @@ def upsert_chunks(
     records = build_records(chunks, embeddings)
     total_upserted = 0
 
-    for batch in _batched(records, batch_size):
+    for batch in batched(records, batch_size):
         try:
             response = index.upsert(vectors=batch, namespace=namespace)
         except Exception as exc:
