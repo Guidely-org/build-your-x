@@ -13,21 +13,20 @@ def health_check():
     return {"status": "healthy"}
 
 
-if __name__ == "__main__":
-    import uvicorn
+# if __name__ == "__main__":
+#     import uvicorn
 
-    uvicorn.run(
-        "main:app",
-        host="0.0.0.0",
-        port=8001,
-        reload=True,
-    )
-
-
+#     uvicorn.run(
+#         "main:app",
+#         host="0.0.0.0",
+#         port=8001,
+#         reload=True,
+#     )
 
 from parser import fetch_html, clean_html
 from chunker import Document
 from chunker import extract_strings_to_embed, add_embeddings_to_chunks
+from embedder import embed
 
 url = 'https://builtin.com/articles/claude-code-codex-cursor-github-copilot-comparison'
 html = fetch_html(url)
@@ -39,6 +38,7 @@ chunks = doc.chunk_document()
 strings = extract_strings_to_embed(chunks)
 embeddings = embed(strings)
 chunks_with_embeddings = add_embeddings_to_chunks(chunks, embeddings)
+
 
 for c in chunks_with_embeddings:
     print(f"Text: {c.text_to_embed}")
