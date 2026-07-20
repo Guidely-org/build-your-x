@@ -46,15 +46,6 @@ class Chunk:
 def extract_strings_to_embed(chunks: list[Chunk]) -> list[str]:
     return [c.text_to_embed for c in chunks ]
 
-def add_embeddings_to_chunks(
-    chunks: list[Chunk], embeddings: list[list[float]]
-) -> list[Chunk]:
-    for chunk, embedding in zip(chunks, embeddings):
-        chunk.embeddings = embedding
-    
-    return chunks
-
-
 class Document:
     def __init__(
         self,

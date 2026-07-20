@@ -25,7 +25,7 @@ def health_check():
 
 from parser import fetch_html, clean_html
 from chunker import Document
-from chunker import extract_strings_to_embed, add_embeddings_to_chunks
+from chunker import extract_strings_to_embed
 from embedder import embed
 
 url = 'https://builtin.com/articles/claude-code-codex-cursor-github-copilot-comparison'
@@ -37,10 +37,3 @@ chunks = doc.chunk_document()
 
 strings = extract_strings_to_embed(chunks)
 embeddings = embed(strings)
-chunks_with_embeddings = add_embeddings_to_chunks(chunks, embeddings)
-
-
-for c in chunks_with_embeddings:
-    print(f"Text: {c.text_to_embed}")
-    print(f"Embeddings: {c.embeddings}")
-    print("\n")
