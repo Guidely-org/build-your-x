@@ -43,7 +43,7 @@ class Chunk:
             "doc_type": self.doc_type
         }
 
-def extract_strings_to_embed(chunks: list[Chunk]) -> list[str]:
+def extract_text_to_embed(chunks: list[Chunk]) -> list[str]:
     return [c.text_to_embed for c in chunks ]
 
 class Document:
