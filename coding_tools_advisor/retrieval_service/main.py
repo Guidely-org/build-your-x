@@ -24,11 +24,12 @@ def health_check():
 #         reload=True,
 #     )
 from .retrieval import retrieve
-from ingestion_service.embedder import embed_query
-
+from shared.embedder import EmbeddingClient
 
 query = "What is the cost of Codex"
-vector = embed_query(query)
+
+ec = EmbeddingClient()
+vector = ec.embed_query(query)
 
 results = retrieve(vector)
 

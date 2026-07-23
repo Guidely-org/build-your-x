@@ -26,7 +26,7 @@ def health_check():
 from parser import fetch_html, clean_html
 from chunker import Document
 from chunker import extract_text_to_embed
-from embedder import embed
+from shared.embedder import EmbeddingClient
 from indexer import upsert_chunks
 
 
@@ -38,7 +38,9 @@ doc = Document(markdown_text=md_text, source_url=url, tool='all', doc_type='')
 chunks = doc.chunk_document()
 
 strings = extract_text_to_embed(chunks)
-embeddings = embed(strings)
+
+ec = EmbeddingClient()
+embeddings = ec.embed(strings)
 upserted = upsert_chunks(chunks, embeddings)
 
 print("\n")
