@@ -31,3 +31,6 @@ def embed(texts: list[str], batch_size: int = 100) -> list[list[float]]:
 
     return embeddings
 
+
+def embed_query(text: str) -> list[float]:
+    return embed([text])[0]
