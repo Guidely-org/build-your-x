@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
-from utils import batched
+from shared.utils import batched
 
 
 load_dotenv()

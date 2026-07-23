@@ -1,8 +1,9 @@
 from chunker import Chunk
-from utils import batched
+from shared.utils import batched
+from shared.pinecone_client import PineconeClient
 
 
-def build_records(chunks: list[Chunk], embeddings: list[list[float]]) -> list[dict]:
+def _build_records(chunks: list[Chunk], embeddings: list[list[float]]) -> list[dict]:
     if len(chunks) != len(embeddings):
         raise ValueError(
             f"Mismatched lengths: {len(chunks)} chunks vs {len(embeddings)} embeddings"
@@ -20,16 +21,15 @@ def build_records(chunks: list[Chunk], embeddings: list[list[float]]) -> list[di
 def upsert_chunks(
     chunks: list[Chunk],
     embeddings: list[list[float]],
-    index,
-    namespace: str = "",
     batch_size: int = 100,
 ) -> int:
-    records = build_records(chunks, embeddings)
+    records = _build_records(chunks, embeddings)
     total_upserted = 0
+    pc = PineconeClient()
 
     for batch in batched(records, batch_size):
         try:
-            response = index.upsert(vectors=batch, namespace=namespace)
+            response = pc.upsert_records(vectors=batch)
         except Exception as exc:
             first_id = batch[0]["id"]
             raise RuntimeError(

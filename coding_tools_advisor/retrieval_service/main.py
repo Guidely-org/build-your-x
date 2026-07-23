@@ -23,26 +23,14 @@ def health_check():
 #         port=8001,
 #         reload=True,
 #     )
-from dotenv import load_dotenv
-from pinecone import Pinecone
 from .retrieval import retrieve
 from ingestion_service.embedder import embed_query
 
 
-
-load_dotenv()
-
-PC_API_KEY = os.getenv('PINECONE_API_KEY')
-PC_INDEX = os.getenv('PINECONE_INDEX_NAME')
-PC_NAMESPACE = os.getenv('PINECONE_NAMESPACE')
-
-pc = Pinecone(api_key=PC_API_KEY)
-index = pc.Index(PC_INDEX)
-
-query = "Tell me about Claude code's pricing plan"
+query = "What is the cost of Codex"
 vector = embed_query(query)
 
-results = retrieve(index, PC_NAMESPACE, vector)
+results = retrieve(vector)
 
 for hit in results:
     print(hit)
