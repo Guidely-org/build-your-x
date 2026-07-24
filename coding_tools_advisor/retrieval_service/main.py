@@ -1,34 +1,45 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+
+from .aug_gen import AugmentedGenerator
+
 
 app = FastAPI(title="retrieval_service")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["POST"],
+    allow_headers=["*"],
+)
 
-@app.get("/")
-def read_root():
-    return {"service": "retrieval_service", "status": "ok"}
+generator = AugmentedGenerator()  
+
+
+class QueryRequest(BaseModel):
+    question: str
+
+
+class QueryResponse(BaseModel):
+    answer: str
+    sources: list[str]
+
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy"}
+    return {"status": "healthy", "service": "retrieval_service"}
 
-# if __name__ == "__main__":
-#     import uvicorn
 
-#     uvicorn.run(
-#         "main:app",
-#         host="0.0.0.0",
-#         port=8001,
-#         reload=True,
-#     )
+@app.post("/query", response_model=QueryResponse)
+def query(request: QueryRequest):
+    try:
+        return generator.answer(request.question)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail="Failed to answer the question") from exc
 
-from .aug_gen import AugmentedGenerator
-query = "Claude Code vs. Codex vs. Cursor vs. GitHub Copilot"
 
-aug_gen = AugmentedGenerator()
-response = aug_gen.answer(query)
+if __name__ == "__main__":
+    import uvicorn
 
-answer, sources = response['answer'], response['sources']
-
-print(answer)
-print("\n")
-print(sources)
+    uvicorn.run("retrieval_service.main:app", host="0.0.0.0", port=8001, reload=True)
