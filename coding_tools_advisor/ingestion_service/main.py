@@ -26,7 +26,7 @@ def health_check():
 from parser import fetch_html, clean_html
 from chunker import Document
 from chunker import extract_text_to_embed
-from shared.embedder import EmbeddingClient
+from shared.openai_client import OpenAIClient
 from indexer import upsert_chunks
 
 
@@ -39,8 +39,8 @@ chunks = doc.chunk_document()
 
 strings = extract_text_to_embed(chunks)
 
-ec = EmbeddingClient()
-embeddings = ec.embed(strings)
+oc = OpenAIClient()
+embeddings = oc.embed(strings)
 upserted = upsert_chunks(chunks, embeddings)
 
 print("\n")

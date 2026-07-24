@@ -24,12 +24,12 @@ def health_check():
 #         reload=True,
 #     )
 from .retrieval import retrieve
-from shared.embedder import EmbeddingClient
+from shared.openai_client import OpenAIClient
 
 query = "What is the cost of Codex"
 
-ec = EmbeddingClient()
-vector = ec.embed_query(query)
+oc = OpenAIClient()
+vector = oc.embed_query(query)
 
 results = retrieve(vector)
 
