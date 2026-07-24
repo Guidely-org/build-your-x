@@ -1,4 +1,4 @@
-from chunker import Chunk
+from .chunker import Chunk
 from shared.utils import batched
 from shared.pinecone_client import PineconeClient
 
@@ -29,7 +29,7 @@ def upsert_chunks(
 
     for batch in batched(records, batch_size):
         try:
-            response = pc.upsert_records(vectors=batch)
+            response = pc.upsert_records(records=batch)
         except Exception as exc:
             first_id = batch[0]["id"]
             raise RuntimeError(
