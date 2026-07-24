@@ -1,4 +1,3 @@
-import os
 from fastapi import FastAPI
 
 app = FastAPI(title="retrieval_service")
@@ -8,11 +7,9 @@ app = FastAPI(title="retrieval_service")
 def read_root():
     return {"service": "retrieval_service", "status": "ok"}
 
-
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
-
 
 # if __name__ == "__main__":
 #     import uvicorn
@@ -23,16 +20,15 @@ def health_check():
 #         port=8001,
 #         reload=True,
 #     )
-from .retrieval import retrieve
-from shared.openai_client import OpenAIClient
 
-query = "What is the cost of Codex"
+from .aug_gen import AugmentedGenerator
+query = "Claude Code vs. Codex vs. Cursor vs. GitHub Copilot"
 
-oc = OpenAIClient()
-vector = oc.embed_query(query)
+aug_gen = AugmentedGenerator()
+response = aug_gen.answer(query)
 
-results = retrieve(vector)
+answer, sources = response['answer'], response['sources']
 
-for hit in results:
-    print(hit)
-    print("\n")
+print(answer)
+print("\n")
+print(sources)
