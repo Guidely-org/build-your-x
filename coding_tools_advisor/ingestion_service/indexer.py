@@ -18,6 +18,15 @@ def _build_records(chunks: list[Chunk], embeddings: list[list[float]]) -> list[d
         for chunk, embedding in zip(chunks, embeddings)
     ]
 
+
+_pinecone_client: PineconeClient | None = None
+
+def _get_pinecone_client() -> PineconeClient:
+    global _pinecone_client
+    if _pinecone_client is None:
+        _pinecone_client = PineconeClient()
+    return _pinecone_client
+
 def upsert_chunks(
     chunks: list[Chunk],
     embeddings: list[list[float]],
@@ -25,7 +34,7 @@ def upsert_chunks(
 ) -> int:
     records = _build_records(chunks, embeddings)
     total_upserted = 0
-    pc = PineconeClient()
+    pc = _get_pinecone_client()
 
     for batch in batched(records, batch_size):
         try:

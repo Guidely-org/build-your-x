@@ -25,7 +25,7 @@ class PineconeClient:
         self.index = self._pc.Index(index_name)
         self.namespace = namespace
 
-    def upsert_records(self, records: list[dict]) -> int:
+    def upsert_records(self, records: list[dict]):
         response = self.index.upsert(vectors=records, namespace=self.namespace)
         return response
 
