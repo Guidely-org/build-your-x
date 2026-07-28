@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coding Tools Advisor</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Coding Tools Advisor</h1>
+    <p class="subtitle">Ask a question about coding tools and get a sourced answer.</p>
+
+    <form id="query-form" class="query-form">
+      <input
+        id="question"
+        type="text"
+        class="question-input"
+        placeholder="e.g. claude pricing plan"
+        autocomplete="off"
+        required
+      />
+      <button type="submit" id="ask-btn">Ask</button>
+    </form>
+
+    <div id="result" class="result hidden">
+      <div id="answer" class="answer"></div>
+      <div id="sources" class="sources"></div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
