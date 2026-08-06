@@ -42,6 +42,7 @@ def score(case: dict, result: dict) -> dict:
     row["false_abstention"] = abstained
 
     if expected := case.get("expected_source"):
+        row["expected_source"] = expected
         row["source_correct"] = expected in result["sources"]
 
     if case["category"] == "comparison":
@@ -51,3 +52,29 @@ def score(case: dict, result: dict) -> dict:
         row["tools_missing"] = sorted(expected - found)
 
     return row
+
+
+def failure_reason(row: dict) -> str | None:
+    """Explain why a scored row counts as a failure, or None if it passed."""
+    if row["error"]:
+        return f"request failed: {row['error']}"
+
+    if row.get("source_correct") is False:
+        expected = row["expected_source"]
+        cited = row["sources"]
+        if not cited:
+            return f"cited no sources; expected {expected}"
+        return f"cited {', '.join(cited)}; expected {expected}"
+
+    if row.get("tool_coverage") is not None and row["tool_coverage"] < 1.0:
+        missing = ", ".join(row["tools_missing"])
+        pct = int(row["tool_coverage"] * 100)
+        return f"named only {pct}% of the tools; missing {missing}"
+
+    if row.get("abstained_correctly") is False:
+        return "answered instead of declining an out-of-scope question"
+
+    if row.get("false_abstention") is True:
+        return "declined an in-scope question it should have answered"
+
+    return None

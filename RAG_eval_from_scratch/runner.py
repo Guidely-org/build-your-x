@@ -4,7 +4,7 @@ from pathlib import Path
 
 from .client import ask
 from .dataset import DATASET
-from .metrics import score
+from .metrics import score, failure_reason
 
 RESULTS = Path(__file__).parent / "results"
 BASELINE = "baseline-naive"
@@ -57,15 +57,17 @@ def run(url: str, label: str):
         print(line)
 
     # Surface what is still broken.
-    failures = [
-        r["id"] for r in rows
-        if r.get("source_correct") is False
-        or r.get("tool_coverage") == 0.0
-        or r.get("abstained_correctly") is False
-        or r.get("false_abstention") is True
-    ]
-    if failures:
-        print(f"\n  still failing: {', '.join(failures)}")
+    failures = [(r, reason) for r in rows if (reason := failure_reason(r))]
+
+    if not failures:
+        print("\n  all checks passed")
+        return
+
+    print(f"\n{len(failures)} of {len(rows)} checks failing:")
+    for row, reason in failures:
+        print()
+        print(f"[{row['id']}] {row['question']}")
+        print(f"      REASON: {reason}\n")
 
 
 if __name__ == "__main__":
