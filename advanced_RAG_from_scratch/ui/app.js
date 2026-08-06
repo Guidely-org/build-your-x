@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8001/query";
+const API_URL = "http://localhost:8002/query";
 
 const form = document.getElementById("query-form");
 const questionInput = document.getElementById("question");
