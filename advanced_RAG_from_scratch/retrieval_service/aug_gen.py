@@ -17,7 +17,7 @@ class AugmentedGenerator:
         self,
         openai_client: OpenAIClient | None = None,
         pinecone_client: PineconeClient | None = None,
-        top_k: int = 4,
+        top_k: int = 10,
     ):
         self.openai_client = openai_client or OpenAIClient()
         self.pinecone_client = pinecone_client or PineconeClient()

@@ -29,9 +29,17 @@ class Chunk:
 
     # A makeshift contextual augmentation
     def _text_with_context(self) -> str:
-        if not self.heading_path:
+        parts = []
+        if self.tool:
+            parts.append(self.tool)
+        if self.doc_type:
+            parts.append(self.doc_type)
+        parts.extend(self.heading_path)
+
+        if not parts:
             return self.text
-        breadcrumb = " > ".join(self.heading_path)
+
+        breadcrumb = " > ".join(parts)
         return f"{breadcrumb}\n{self.text}"
     
     def _build_chunk_metadata(self) -> dict:
@@ -43,8 +51,15 @@ class Chunk:
             "doc_type": self.doc_type
         }
 
+
 def extract_text_to_embed(chunks: list[Chunk]) -> list[str]:
     return [c.text_to_embed for c in chunks ]
+
+
+_MIN_CHUNK_CHARS = 80
+
+def _is_meaningful(text: str) -> bool:
+    return len(text.strip()) >= _MIN_CHUNK_CHARS
 
 class Document:
     def __init__(
@@ -132,6 +147,9 @@ class Document:
             pieces = [body] if len(body) <= chunk_size else self._pack_sentences(body, chunk_size=chunk_size)
 
             for piece in pieces:
+                if not _is_meaningful(piece):
+                    continue
+
                 chunks.append(Chunk(
                     text=piece,
                     heading_path=section["heading_path"],

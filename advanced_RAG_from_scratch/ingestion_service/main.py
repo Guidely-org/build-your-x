@@ -10,7 +10,7 @@ seeds = [
         'doc_type': 'pricing'
     },
     {
-        'url': 'https://openai.com/api/pricing/',
+        'url': 'https://learn.chatgpt.com/docs/pricing',
         'tool': 'Codex',
         'doc_type': 'pricing'
     },
@@ -73,4 +73,20 @@ for s in seeds:
     oc = OpenAIClient()
     embeddings = oc.embed(strings)
     upserted = upsert_chunks(chunks, embeddings)
+
+
+# md = clean_html(fetch_html("https://cursor.com/pricing"))
+
+# # print(f"Total length: {len(md)} characters\n")
+# # print("=" * 60)
+# # print(md[:3000])
+
+
+# doc = Document(markdown_text=md, source_url="https://cursor.com/pricing",
+#                tool="Cursor", doc_type="pricing")
+# chunks = doc.chunk_document()
+
+# print(f"\n{len(chunks)} chunks produced\n")
+# for c in chunks:
+#     print(f"{' > '.join(c.heading_path):45} {len(c.text):>5} chars")
 

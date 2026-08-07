@@ -18,6 +18,7 @@ _CONTAINER_SELECTORS = [
 ]
 
 _UNWANTED_TAGS = ["script", "style", "nav", "header", "footer", "aside", "head"]
+_MD_LINK_RE = re.compile(r'\[([^\]]*)\]\([^)]*\)')
 
 
 def _decompose_unwanted_tags(soup: BeautifulSoup) -> BeautifulSoup:
@@ -37,8 +38,9 @@ def _pick_main_container(soup: BeautifulSoup) -> Tag:
     return soup
 
 def _normalize_text(text: str) -> str:
-    norm_txt = re.sub(r'\n{3,}', '\n\n', text)
-    return norm_txt.strip()
+    text = _MD_LINK_RE.sub(r'\1', text)          # keep link text, drop the URL
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip()
 
 def _convert_to_markdown(soup: BeautifulSoup) -> str:
     md_text = md(str(soup), heading_style="ATX")

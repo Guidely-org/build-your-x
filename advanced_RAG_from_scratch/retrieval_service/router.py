@@ -25,6 +25,10 @@ Rules:
   For a comparison with no tools named, list all four.
 - "doc_type" is "pricing" only if the question is about cost, plans, tiers,
   or billing. Otherwise null.
+- "Claude" and "Claude Code" refer to the same tool. Treat any mention of
+  Claude as the tool "Claude".
+- Only mark a question out of scope if it is about a product entirely
+  outside this list, or not about coding tools at all.
 
 Question: {question}"""
 
