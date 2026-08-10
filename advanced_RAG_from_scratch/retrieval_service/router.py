@@ -27,8 +27,14 @@ Rules:
   or billing. Otherwise null.
 - "Claude" and "Claude Code" refer to the same tool. Treat any mention of
   Claude as the tool "Claude".
-- Only mark a question out of scope if it is about a product entirely
-  outside this list, or not about coding tools at all.
+- A question may name a plan, tier, or feature without naming its tool,
+  for example "the Ultra plan" or "what is Bugbot". These are still in
+  scope: set "type" to "factual".
+- Always populate "tools" with every tool the question names, even when
+  it also names a plan or tier. Only leave "tools" empty when the question
+  names no tool at all.
+- Only mark a question out of scope if it names a different product
+  entirely, or is not about coding tools at all.
 
 Question: {question}"""
 
