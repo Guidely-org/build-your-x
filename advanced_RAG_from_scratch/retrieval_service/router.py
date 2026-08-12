@@ -18,7 +18,9 @@ Return JSON only, with no other text:
 
 Rules:
 - "type" is "comparison" if the question compares tools, or asks which is
-  best, cheapest, or most generous.
+  best, cheapest, or most generous. "type" is also "comparison" whenever the question asks about several tools at
+  once, including phrasings like "each tool", "all of them", or "the tools".
+  It does not need the word "compare" or a superlative.
 - "type" is "out_of_scope" if the question is not about one of the four
   tools listed above. A question about a different product is out of scope.
 - "tools" lists every tool from the list above that the question is about.

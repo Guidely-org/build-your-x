@@ -29,7 +29,8 @@ _CITATION_RE = re.compile(r"\s?\[(\d+)\]")
 
 # How many chunks to fetch per tool when decomposing a comparison question.
 # Four tools at 3 chunks each gives 12, comparable to the single-search top_k.
-_PER_TOOL_K = 3
+# _PER_TOOL_K = 3 # Keep it at 3 for step 2 improvements
+_PER_TOOL_K = 2 # Keep at 
 
 
 class AugmentedGenerator:
