@@ -24,6 +24,7 @@ class QueryRequest(BaseModel):
 class QueryResponse(BaseModel):
     answer: str
     sources: list[str]
+    retrieved: list[str] = []
 
 
 @app.get("/health")

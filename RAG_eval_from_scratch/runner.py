@@ -19,6 +19,7 @@ def summarise(rows: list[dict]) -> dict:
     return {
         "source_accuracy": _rate(rows, "source_correct"),
         "tool_coverage": _rate(rows, "tool_coverage"),
+        "price_accuracy": _rate(rows, "price_accuracy"),
         "abstention": _rate(rows, "abstained_correctly"),
         "false_abstention": _rate(rows, "false_abstention"),
         "median_latency_s": statistics.median([r["latency_s"] for r in rows]),

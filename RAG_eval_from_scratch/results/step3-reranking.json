@@ -1,0 +1,253 @@
+{
+  "label": "step3-reranking",
+  "summary": {
+    "source_accuracy": 1.0,
+    "tool_coverage": 1.0,
+    "price_accuracy": 1.0,
+    "abstention": 1.0,
+    "false_abstention": 0.0,
+    "median_latency_s": 5.53,
+    "errors": 0
+  },
+  "cases": [
+    {
+      "id": "p1",
+      "category": "pricing",
+      "question": "Cursor pricing plan",
+      "latency_s": 7.55,
+      "error": null,
+      "answer": "Cursor offers several pricing plans:\n\n1. **Hobby**: Free, includes limited Agent requests and access to Composer.\n2. **Individual**: $20 per month.\n3. **Pro**: Price not specified, but includes extended limits on Agent and other features.\n4. **Pro+**: Price not specified, includes 3x Pro limits and additional features.\n5. **Ultra**: Price not specified, includes 20x Pro limits and priority access to new features.\n6. **Teams**: $40 per user per month, includes centralized team billing and administration, among other features.\n7. **Enterprise**: Custom pricing, includes all features from Teams plus additional advanced features.\n\nAll prices are exclusive of any applicable taxes.",
+      "sources": [
+        "https://cursor.com/pricing"
+      ],
+      "false_abstention": false,
+      "expected_source": "https://cursor.com/pricing",
+      "source_correct": true
+    },
+    {
+      "id": "p2",
+      "category": "pricing",
+      "question": "Claude pricing plan",
+      "latency_s": 7.61,
+      "error": null,
+      "answer": "The Claude pricing plans are as follows:\n\n1. **Enterprise Plan**: \n   - Cost: $20 per seat per month plus usage billed at API rates. \n   - Billed annually and includes advanced security and admin controls.\n\n2. **Team Plan**: \n   - Standard seat: $20 per seat per month if billed annually ($25 if billed monthly).\n   - Premium seat: $100 per seat per month if billed annually ($125 if billed monthly).\n\n3. **Pro Plan**: \n   - Cost: $17 per month with an annual subscription discount ($200 billed up front), or $20 if billed monthly.\n\n4. **Max Plan**: \n   - Cost: From $100 per month. This plan offers 5x or 20x more usage than Pro.\n\nEach plan has specific features and usage limits, which can vary based on the type of seat or plan chosen.",
+      "sources": [
+        "https://claude.com/pricing"
+      ],
+      "false_abstention": false,
+      "expected_source": "https://claude.com/pricing",
+      "source_correct": true
+    },
+    {
+      "id": "p3",
+      "category": "pricing",
+      "question": "How much does GitHub Copilot cost per month?",
+      "latency_s": 5.53,
+      "error": null,
+      "answer": "GitHub Copilot has several pricing plans:\n\n- Free: $0 per month\n- Pro: $10 per month\n- Pro+: $39 per month\n- Max: $100 per month\n\nAdditionally, there are organization plans:\n- Business: Pricing not specified in the context\n- Enterprise: Pricing not specified in the context\n\nFor individual developers, the Pro plan is $10 per month, while the Max plan is $100 per month for heavy usage.",
+      "sources": [
+        "https://github.com/features/copilot/plans"
+      ],
+      "false_abstention": false,
+      "expected_source": "https://github.com/features/copilot/plans",
+      "source_correct": true
+    },
+    {
+      "id": "p4",
+      "category": "pricing",
+      "question": "What does Copilot's free tier include?",
+      "latency_s": 3.81,
+      "error": null,
+      "answer": "GitHub Copilot Free includes the following features:\n\n1. Limited to 2000 completions and 50 chat requests (including Copilot Edits).\n2. Access to supported environments such as editors and IDEs, CLI, and GitHub.\n3. Use of Copilot CLI and agent mode.\n\nHowever, it does not include features like app modernization for Java and .NET, code review, custom instructions, and cloud agent capabilities, which are available in higher-tier plans.",
+      "sources": [
+        "https://github.com/features/copilot/plans"
+      ],
+      "false_abstention": false,
+      "expected_source": "https://github.com/features/copilot/plans",
+      "source_correct": true
+    },
+    {
+      "id": "p5",
+      "category": "pricing",
+      "question": "What is the Ultra plan?",
+      "latency_s": 3.84,
+      "error": null,
+      "answer": "The Ultra plan includes everything in the Pro plan, plus 20 times the Pro limits on Agent, generous limits for Grok & Composer, access to frontier models, MCPs, skills, and hooks, cloud agents, bugbot on usage-based billing, and priority access to new features.",
+      "sources": [
+        "https://cursor.com/pricing"
+      ],
+      "false_abstention": false,
+      "expected_source": "https://cursor.com/pricing",
+      "source_correct": true
+    },
+    {
+      "id": "c1",
+      "category": "capability",
+      "question": "Does Cursor work with JetBrains IDEs?",
+      "latency_s": 3.47,
+      "error": null,
+      "answer": "No, Cursor does not work with JetBrains IDEs. It is a Cursor-only ecosystem, meaning you must use Cursor's IDE and cannot use it with JetBrains or Neovim without switching editors.",
+      "sources": [
+        "https://www.nxcode.io/resources/news/cursor-vs-claude-code-vs-github-copilot-2026-ultimate-comparison"
+      ],
+      "false_abstention": false
+    },
+    {
+      "id": "c2",
+      "category": "capability",
+      "question": "Does Claude Code run in the terminal?",
+      "latency_s": 3.21,
+      "error": null,
+      "answer": "Yes, Claude Code runs in the terminal.",
+      "sources": [
+        "https://builtin.com/articles/claude-code-codex-cursor-github-copilot-comparison",
+        "https://www.nxcode.io/resources/news/cursor-vs-claude-code-vs-github-copilot-2026-ultimate-comparison",
+        "https://uvik.net/blog/claude-code-vs-cursor-vs-copilot-vs-codex-2026/"
+      ],
+      "false_abstention": false
+    },
+    {
+      "id": "c3",
+      "category": "capability",
+      "question": "How does Cursor handle large codebases?",
+      "latency_s": 3.78,
+      "error": null,
+      "answer": "Cursor handles large codebases through its Composer feature, which allows for multi-file edits with visual diffs. However, it is constrained by smaller context windows, typically around 200K tokens, which limits its ability to hold entire codebases in context simultaneously compared to Claude Code's 1M-token context window.",
+      "sources": [
+        "https://uvik.net/blog/claude-code-vs-cursor-vs-copilot-vs-codex-2026/",
+        "https://www.nxcode.io/resources/news/cursor-vs-claude-code-vs-github-copilot-2026-ultimate-comparison"
+      ],
+      "false_abstention": false
+    },
+    {
+      "id": "m1",
+      "category": "comparison",
+      "question": "Which tool has the most generous free tier?",
+      "latency_s": 13.69,
+      "error": null,
+      "answer": "Claude: Claude offers a completely free tier that includes a variety of features such as chat on multiple platforms, code generation, web search capabilities, and the ability to create and execute files. This makes it accessible for everyone without any cost, providing a robust set of functionalities even in its free version.\n\nCursor: Cursor also has a free tier known as the Hobby plan, which allows users to access limited Agent requests and the Composer tool without requiring a credit card. However, it is more limited compared to Claude's offerings.\n\nCopilot: GitHub Copilot provides a free pricing tier, but it comes with limited functionality specifically for individual developers. Users with access to higher tiers like Copilot Business or Enterprise cannot use the free version, which restricts its availability.\n\nCodex: Codex does not explicitly mention a free tier in the provided context. Instead, it offers paid plans starting from $20/month for the Plus tier, which includes various features but does not highlight any free access.\n\nIn conclusion, Claude has the most generous free tier, offering a wide range of features without any cost, while Cursor also provides a free option but with more limitations. Copilot's free tier is restricted to individual developers, and Codex does not appear to have a free tier at all.",
+      "sources": [
+        "https://claude.com/pricing",
+        "https://cursor.com/pricing",
+        "https://github.com/features/copilot/plans",
+        "https://learn.chatgpt.com/docs/pricing"
+      ],
+      "false_abstention": false,
+      "tool_coverage": 1.0,
+      "tools_missing": []
+    },
+    {
+      "id": "m2",
+      "category": "comparison",
+      "question": "Compare the pricing of Claude Code, Cursor, Copilot and Codex",
+      "latency_s": 11.54,
+      "error": null,
+      "answer": "Claude: The pricing for Claude starts at $17 per month with an annual subscription discount, totaling $200 billed upfront. The paid plans include features such as Claude Code, which is available in all paid plans and shares usage limits with the rest of the plan. For heavy coding sessions, users can switch to pay-as-you-go API credits through a Console account.\n\nCursor: Cursor subscriptions are exclusively sold through their official website, and there is no mention of specific pricing in the provided context. It emphasizes the importance of purchasing directly to avoid unauthorized or potentially fraudulent accounts.\n\nCopilot: GitHub Copilot offers several pricing plans, starting with a free plan, followed by Pro at $10 per month, Pro+ at $39 per month, and Max at $100 per month. Each plan includes different features and usage limits, with the Max plan providing the highest usage and priority access to new models and features.\n\nCodex: Codex pricing begins at $100 per month for the Pro plan, which offers access to a fast Codex model for coding tasks and significantly higher usage limits compared to the Plus plan. The Pro plan also includes unlimited ChatGPT Voice on the $200/month tier, with all tasks drawing from the Codex usage budget.\n\nIn conclusion, Claude offers a competitive pricing structure with a focus on coding features, while Cursor's pricing details are not specified. Copilot provides a tiered pricing model catering to different user needs, and Codex offers higher usage limits at a premium price. Each tool has its unique features and pricing strategies, appealing to various user preferences.",
+      "sources": [
+        "https://claude.com/pricing",
+        "https://cursor.com/pricing",
+        "https://github.com/features/copilot/plans",
+        "https://learn.chatgpt.com/docs/pricing"
+      ],
+      "false_abstention": false,
+      "tool_coverage": 1.0,
+      "tools_missing": []
+    },
+    {
+      "id": "m3",
+      "category": "comparison",
+      "question": "Cursor or Claude Code for a large refactor?",
+      "latency_s": 7.89,
+      "error": null,
+      "answer": "Cursor: Cursor is a full IDE that integrates AI features into the entire editing experience, making it particularly effective for interactive single-file editing with strong autocomplete capabilities. However, it has a smaller context window (typically 200K tokens) which may limit its performance during large multi-file refactors compared to other tools.\n\nClaude: Claude Code is a terminal-native coding tool that excels in handling large multi-file refactors, boasting a 1M-token context window and scoring 80.8% on SWE-bench Verified for this task. It is designed to run alongside any editor, making it a preferred choice for heavy refactor sessions, while Cursor is better suited for daily editing tasks.\n\nIn conclusion, for large refactor tasks, Claude Code is the superior choice due to its extensive context capabilities, while Cursor is more effective for interactive single-file editing.",
+      "sources": [
+        "https://uvik.net/blog/claude-code-vs-cursor-vs-copilot-vs-codex-2026/"
+      ],
+      "false_abstention": false,
+      "tool_coverage": 1.0,
+      "tools_missing": []
+    },
+    {
+      "id": "m4",
+      "category": "comparison",
+      "question": "Which tool is cheapest for a five-person team?",
+      "latency_s": 11.68,
+      "error": null,
+      "answer": "Claude: For a five-person team, the cheapest option with Claude would be the Standard seat at $20 per seat per month if billed annually, totaling $100 per month for the team. This plan includes all Claude features and allows for more usage than the Pro plan.\n\nCursor: The Teams plan for Cursor costs $40 per user per month, which would amount to $200 per month for a five-person team. This plan includes centralized billing, team marketplace, and other collaborative features.\n\nCopilot: GitHub Copilot offers a Pro plan at $10 per user per month, which would total $50 per month for a five-person team. This plan is designed for everyday coding and provides access to the necessary tools for collaboration.\n\nCodex: The Business plan for Codex is priced at $20 per user per month, resulting in a total of $100 per month for a five-person team. This plan includes access to ChatGPT and Codex across various platforms, along with essential admin controls.\n\nIn conclusion, the cheapest tool for a five-person team is GitHub Copilot, costing $50 per month, followed by Claude and Codex at $100 per month, and Cursor at $200 per month.",
+      "sources": [
+        "https://claude.com/pricing",
+        "https://cursor.com/pricing",
+        "https://github.com/features/copilot/plans",
+        "https://learn.chatgpt.com/docs/pricing"
+      ],
+      "false_abstention": false,
+      "tool_coverage": 1.0,
+      "tools_missing": []
+    },
+    {
+      "id": "m5",
+      "category": "comparison",
+      "question": "Claude Code vs Copilot for enterprise use",
+      "latency_s": 14.06,
+      "error": null,
+      "answer": "Claude: Claude Code is designed primarily for individual developers, but it does support team deployments through its API. It offers features such as code execution, project sharing, and collaboration, but lacks the extensive organizational policy controls and IP indemnification that larger enterprises might require. For teams, Claude provides a Team plan with various seat types, but it is not as robust in enterprise features compared to competitors like Copilot.\n\nCopilot: GitHub Copilot is tailored for both individual developers and organizations, with specific offerings for business and enterprise use. It includes inline suggestions and chat assistance, and its enterprise version provides additional customization, organizational policy management, and IP indemnification. Copilot can index an organization\u2019s codebase for tailored suggestions, making it a strong choice for enterprise environments due to its multi-IDE support and integration with GitHub.\n\nIn conclusion, while Claude Code offers some collaborative features, GitHub Copilot is better suited for enterprise use due to its comprehensive organizational capabilities and support for team management.",
+      "sources": [
+        "https://claude.com/pricing",
+        "https://github.com/features/copilot/plans",
+        "https://www.nxcode.io/resources/news/cursor-vs-claude-code-vs-github-copilot-2026-ultimate-comparison"
+      ],
+      "false_abstention": false,
+      "tool_coverage": 1.0,
+      "tools_missing": []
+    },
+    {
+      "id": "m6",
+      "category": "comparison",
+      "question": "What does each tool cost per month for a single developer?",
+      "latency_s": 21.49,
+      "error": null,
+      "answer": "Claude: For a single developer, the cost of using Claude is $20 per month if billed monthly, or $200 billed upfront for an annual subscription, which provides access to various features including Claude Code, Claude Cowork, and more.\n\nCursor: The cost for a single developer using Cursor is $20 per month for the Individual plan, which includes extended limits on the Agent and access to frontier models, among other features.\n\nCopilot: GitHub Copilot offers a Pro plan for $10 per user per month, which is suitable for everyday coding tasks. There is also a Pro+ plan available for $39 per user per month, aimed at more complex development.\n\nCodex: The monthly cost for a single developer using Codex is $20 for the Plus plan, which includes access to various models and cloud-based integrations. The Pro plan starts from $100 per month and offers higher rate limits and additional features.\n\nIn conclusion, the monthly costs for a single developer are $20 for Claude, $20 for Cursor, $10 for Copilot (Pro plan), and $20 for Codex (Plus plan), with higher options available for Copilot and Codex.",
+      "sources": [
+        "https://claude.com/pricing",
+        "https://cursor.com/pricing",
+        "https://github.com/features/copilot/plans",
+        "https://learn.chatgpt.com/docs/pricing"
+      ],
+      "false_abstention": false,
+      "tool_coverage": 1.0,
+      "tools_missing": [],
+      "price_accuracy": 1.0,
+      "wrong_prices": {}
+    },
+    {
+      "id": "o1",
+      "category": "out_of_scope",
+      "question": "What is the weather in Lagos today?",
+      "latency_s": 1.32,
+      "error": null,
+      "answer": "I don't have information about that in my knowledge base.",
+      "sources": [],
+      "abstained_correctly": true
+    },
+    {
+      "id": "o2",
+      "category": "out_of_scope",
+      "question": "How do I cook jollof rice?",
+      "latency_s": 1.01,
+      "error": null,
+      "answer": "I don't have information about that in my knowledge base.",
+      "sources": [],
+      "abstained_correctly": true
+    },
+    {
+      "id": "o3",
+      "category": "out_of_scope",
+      "question": "How much does JetBrains IntelliJ IDEA cost?",
+      "latency_s": 0.92,
+      "error": null,
+      "answer": "I don't have information about that in my knowledge base.",
+      "sources": [],
+      "abstained_correctly": true
+    }
+  ]
+}

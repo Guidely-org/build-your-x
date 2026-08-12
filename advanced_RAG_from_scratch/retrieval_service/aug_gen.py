@@ -3,6 +3,7 @@ import re
 from shared.openai_client import OpenAIClient
 from shared.pinecone_client import PineconeClient
 from .router import route, TOOLS
+from .reranker import rerank
 
 
 SYSTEM_PROMPT = """Answer the question using only the numbered context below.
@@ -26,11 +27,8 @@ it in the context."""
 
 
 _CITATION_RE = re.compile(r"\s?\[(\d+)\]")
-
-# How many chunks to fetch per tool when decomposing a comparison question.
-# Four tools at 3 chunks each gives 12, comparable to the single-search top_k.
-# _PER_TOOL_K = 3 # Keep it at 3 for step 2 improvements
-_PER_TOOL_K = 2 # Keep at 
+_PER_TOOL_K = 2            # chunks per tool that reach the model
+_PER_TOOL_CANDIDATES = 6   # chunks per tool fetched before reranking
 
 
 class AugmentedGenerator:
@@ -71,17 +69,22 @@ class AugmentedGenerator:
         context, citation_map = self._build_context_and_citations(matches)
         raw_answer = self._generate(question, context, route_info)
         print(f"\n{raw_answer}")
-        return self._build_response(raw_answer, citation_map)
+        response = self._build_response(raw_answer, citation_map)
+        response["retrieved"] = [
+            f"{m.metadata['tool']}: {' > '.join(m.metadata['heading_path'])}"
+            for m in matches
+        ]
+        return response
 
     def _retrieve(self, question: str, route_info: dict):
         query_vector = self.openai_client.embed_query(question)
         pinecone_filter = self._build_filter(route_info)
         results = self.pinecone_client.query(
             query_vector,
-            top_k=self.top_k,
+            top_k=self.top_k * 2,
             filter=pinecone_filter,
         )
-        return results.matches
+        return rerank(question, results.matches, keep=self.top_k)
     
     def _retrieve_per_tool(self, question: str, route_info: dict):
         """Run one filtered retrieval per tool, so every tool is represented.
@@ -99,10 +102,10 @@ class AugmentedGenerator:
 
             results = self.pinecone_client.query(
                 query_vector,
-                top_k=_PER_TOOL_K,
+                top_k=_PER_TOOL_CANDIDATES,
                 filter={"tool": tool},
             )
-            matches.extend(results.matches)
+            matches.extend(rerank(question, results.matches, keep=_PER_TOOL_K))
 
         # Comparison articles carry tool="comparison", so the per-tool filter
         # above excludes them. For non-pricing comparisons they are often the

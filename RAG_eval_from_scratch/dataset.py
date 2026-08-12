@@ -106,6 +106,22 @@ DATASET = [
         "expected_tools": ["Claude", "Copilot"],
     },
 
+    # -------- Testing reranking functionality. -------
+    {
+        "id": "m6",
+        "question": "What does each tool cost per month for a single developer?",
+        "category": "comparison",
+        "expected_tools": ALL_TOOLS,
+        "expected_prices": {
+            "Claude": ["$17", "$20"],
+            "Cursor": ["$20"],
+            "Copilot": ["$10"],
+            "Codex": ["$20"],
+        },
+        "note": "Cursor's Individual and Copilot's Pro rank third on similarity, "
+                "behind Teams and Pro+. At two chunks per tool they get cut.",
+    },
+
     # --- out_of_scope: must decline. ---
     {
         "id": "o1",

@@ -38,3 +38,12 @@ class PineconeClient:
             include_metadata=True,
             include_values=False
         )
+    
+    def rerank(self, query: str, documents: list[dict], top_n: int):
+        return self._pc.inference.rerank(
+            model="bge-reranker-v2-m3",
+            query=query,
+            documents=documents,
+            top_n=top_n,
+            rank_fields=["text"],
+        )

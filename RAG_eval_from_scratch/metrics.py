@@ -1,3 +1,4 @@
+import re
 from .dataset import TOOL_ALIASES
 
 _REFUSAL_MARKERS = [
@@ -50,6 +51,22 @@ def score(case: dict, result: dict) -> dict:
         found = named_tools(result["answer"]) & expected
         row["tool_coverage"] = round(len(found) / len(expected), 2)
         row["tools_missing"] = sorted(expected - found)
+    
+    if expected := case.get("expected_prices"):
+        paragraphs = [p for p in result["answer"].split("\n") if p.strip()]
+        wrong = {}
+
+        for tool, accepted in expected.items():
+            para = next((p for p in paragraphs if tool.lower() in p.lower()), "")
+            matched = any(
+                re.search(rf"{re.escape(price)}\b", para) for price in accepted
+            )
+            if not matched:
+                found = re.findall(r"\$\d[\d,]*", para) or ["no price"]
+                wrong[tool] = f"said {', '.join(found)}, expected {' or '.join(accepted)}"
+
+        row["price_accuracy"] = round(1 - len(wrong) / len(expected), 2)
+        row["wrong_prices"] = wrong
 
     return row
 
@@ -76,5 +93,9 @@ def failure_reason(row: dict) -> str | None:
 
     if row.get("false_abstention") is True:
         return "declined an in-scope question it should have answered"
+    
+    if row.get("wrong_prices"):
+        details = [f"\n        {t}: {msg}" for t, msg in row["wrong_prices"].items()]
+        return "wrong single-developer price:" + "".join(details)
 
     return None
