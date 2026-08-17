@@ -17,11 +17,11 @@ def _rate(rows, key):
 
 def summarise(rows: list[dict]) -> dict:
     return {
-        "source_accuracy": _rate(rows, "source_correct"),
+        "citation_accuracy": _rate(rows, "source_correct"),
         "tool_coverage": _rate(rows, "tool_coverage"),
         "price_accuracy": _rate(rows, "price_accuracy"),
-        "abstention": _rate(rows, "abstained_correctly"),
-        "false_abstention": _rate(rows, "false_abstention"),
+        "correct_refusal_rate": _rate(rows, "abstained_correctly"),
+        "incorrect_refusal_rate": _rate(rows, "incorrect_refusal_rate"),
         "median_latency_s": statistics.median([r["latency_s"] for r in rows]),
         "errors": sum(1 for r in rows if r["error"]),
     }

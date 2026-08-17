@@ -1,10 +1,10 @@
 {
   "label": "baseline-naive",
   "summary": {
-    "source_accuracy": 0.8,
+    "citation_accuracy": 0.8,
     "tool_coverage": 0.55,
-    "abstention": 1.0,
-    "false_abstention": 0.15,
+    "correct_refusal_rate": 1.0,
+    "incorrect_refusal_rate": 0.15,
     "median_latency_s": 3.45,
     "errors": 0
   },
@@ -20,7 +20,7 @@
         "https://www.nxcode.io/resources/news/cursor-vs-claude-code-vs-github-copilot-2026-ultimate-comparison",
         "https://uvik.net/blog/claude-code-vs-cursor-vs-copilot-vs-codex-2026/"
       ],
-      "false_abstention": false,
+      "incorrect_refusal_rate": false,
       "expected_source": "https://cursor.com/pricing",
       "source_correct": false
     },
@@ -34,7 +34,7 @@
       "sources": [
         "https://claude.com/pricing"
       ],
-      "false_abstention": false,
+      "incorrect_refusal_rate": false,
       "expected_source": "https://claude.com/pricing",
       "source_correct": true
     },
@@ -48,7 +48,7 @@
       "sources": [
         "https://github.com/features/copilot/plans"
       ],
-      "false_abstention": false,
+      "incorrect_refusal_rate": false,
       "expected_source": "https://github.com/features/copilot/plans",
       "source_correct": true
     },
@@ -62,7 +62,7 @@
       "sources": [
         "https://github.com/features/copilot/plans"
       ],
-      "false_abstention": false,
+      "incorrect_refusal_rate": false,
       "expected_source": "https://github.com/features/copilot/plans",
       "source_correct": true
     },
@@ -76,7 +76,7 @@
       "sources": [
         "https://cursor.com/pricing"
       ],
-      "false_abstention": false,
+      "incorrect_refusal_rate": false,
       "expected_source": "https://cursor.com/pricing",
       "source_correct": true
     },
@@ -88,7 +88,7 @@
       "error": null,
       "answer": "I do not have that information.",
       "sources": [],
-      "false_abstention": true
+      "incorrect_refusal_rate": true
     },
     {
       "id": "c2",
@@ -101,7 +101,7 @@
         "https://builtin.com/articles/claude-code-codex-cursor-github-copilot-comparison",
         "https://www.nxcode.io/resources/news/cursor-vs-claude-code-vs-github-copilot-2026-ultimate-comparison"
       ],
-      "false_abstention": false
+      "incorrect_refusal_rate": false
     },
     {
       "id": "c3",
@@ -113,7 +113,7 @@
       "sources": [
         "https://uvik.net/blog/claude-code-vs-cursor-vs-copilot-vs-codex-2026/"
       ],
-      "false_abstention": false
+      "incorrect_refusal_rate": false
     },
     {
       "id": "m1",
@@ -125,7 +125,7 @@
       "sources": [
         "http://clarista.io/blog/claude-code-vs-cursor-vs-codex"
       ],
-      "false_abstention": false,
+      "incorrect_refusal_rate": false,
       "tool_coverage": 0.0,
       "tools_missing": [
         "Claude",
@@ -145,7 +145,7 @@
         "https://www.nxcode.io/resources/news/cursor-vs-claude-code-vs-github-copilot-2026-ultimate-comparison",
         "https://uvik.net/blog/claude-code-vs-cursor-vs-copilot-vs-codex-2026/"
       ],
-      "false_abstention": true,
+      "incorrect_refusal_rate": true,
       "tool_coverage": 1.0,
       "tools_missing": []
     },
@@ -159,7 +159,7 @@
       "sources": [
         "https://uvik.net/blog/claude-code-vs-cursor-vs-copilot-vs-codex-2026/"
       ],
-      "false_abstention": false,
+      "incorrect_refusal_rate": false,
       "tool_coverage": 0.5,
       "tools_missing": [
         "Cursor"
@@ -175,7 +175,7 @@
       "sources": [
         "http://clarista.io/blog/claude-code-vs-cursor-vs-codex"
       ],
-      "false_abstention": false,
+      "incorrect_refusal_rate": false,
       "tool_coverage": 0.25,
       "tools_missing": [
         "Claude",
@@ -194,7 +194,7 @@
         "https://www.nxcode.io/resources/news/cursor-vs-claude-code-vs-github-copilot-2026-ultimate-comparison",
         "https://uvik.net/blog/claude-code-vs-cursor-vs-copilot-vs-codex-2026/"
       ],
-      "false_abstention": false,
+      "incorrect_refusal_rate": false,
       "tool_coverage": 1.0,
       "tools_missing": []
     },

@@ -40,7 +40,7 @@ def score(case: dict, result: dict) -> dict:
         return row
 
     # In scope from here on: declining is a failure.
-    row["false_abstention"] = abstained
+    row["incorrect_refusal_rate"] = abstained
 
     if expected := case.get("expected_source"):
         row["expected_source"] = expected
@@ -91,7 +91,7 @@ def failure_reason(row: dict) -> str | None:
     if row.get("abstained_correctly") is False:
         return "answered instead of declining an out-of-scope question"
 
-    if row.get("false_abstention") is True:
+    if row.get("incorrect_refusal_rate") is True:
         return "declined an in-scope question it should have answered"
     
     if row.get("wrong_prices"):
